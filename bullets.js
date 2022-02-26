@@ -1,5 +1,5 @@
 const bulletImage = new Image();
-bulletImage.src = '/images/bullet1.png';
+bulletImage.src = '/images/bullet2.png';
 
 class Bullet {
   constructor(game, x, y) {

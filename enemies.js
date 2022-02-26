@@ -1,6 +1,9 @@
 const enemyImage = new Image();
 enemyImage.src = './images/Enemy1.png';
 
+const explosionAnimation = new Image();
+explosionAnimation.src = './images/explosion.png';
+
 class Enemy {
   constructor(game, x, y, speed) {
     this.game = game;
@@ -9,13 +12,23 @@ class Enemy {
     this.speed = speed;
     this.width = 75;
     this.height = 75;
+    //explosionAnimation.src = 'explosion.png';
+    //this.explosion = explosionAnimation;
   }
 
   checkIntersection(player) {
     return (
-      player.x + player.width > this.x &&
+      player.x - 20 + player.width > this.x + 20 && //fixed
+      player.x + 20 < this.x + this.width - 20 &&
+      player.y + player.height - 20 > this.y + 20 && //fixed?
+      player.y + 20 < this.y + this.height - 20
+    );
+  }
+  checkIntersectionBullets(player) {
+    return (
+      player.x + player.width > this.x && //fixed
       player.x < this.x + this.width &&
-      player.y + player.height > this.y &&
+      player.y + player.height > this.y + 20 && //fixed?
       player.y < this.y + this.height
     );
   }

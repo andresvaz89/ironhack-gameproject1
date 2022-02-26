@@ -37,16 +37,16 @@ class Game {
       console.log(code);
       switch (code) {
         case 'ArrowUp':
-          this.player.y -= 15;
+          this.player.y -= 10;
           break;
         case 'ArrowDown':
-          this.player.y += 15;
+          this.player.y += 10;
           break;
         case 'ArrowRight':
-          this.player.x += 15;
+          this.player.x += 10;
           break;
         case 'ArrowLeft':
-          this.player.x -= 15;
+          this.player.x -= 10;
           break;
         case 'Space':
           this.fireWeapon();
@@ -137,7 +137,8 @@ class Game {
       bullet.runLogic();
       for (const enemy of this.enemies) {
         //if bullet touches enemy, both dissappear
-        const bulletandEnemyareIntersecting = enemy.checkIntersection(bullet);
+        const bulletandEnemyareIntersecting =
+          enemy.checkIntersectionBullets(bullet);
         const indexOfEnemy = this.enemies.indexOf(enemy);
 
         if (bulletandEnemyareIntersecting) {

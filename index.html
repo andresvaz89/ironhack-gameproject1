@@ -7,8 +7,25 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <canvas width="500" height="500"></canvas>
-    Hello world
+    <div class="screen" id="start-screen">
+      <h1>Hello Pilot</h1>
+      <button>Start Game</button>
+    </div>
+
+    <div class="screen" id="playing-screen" style="display: none">
+      <canvas width="2000" height="1000"></canvas>
+    </div>
+
+    <div class="screen" id="game-over-screen" style="display: none">
+      <h3>Game Over</h3>
+      <button>Try it again, Pilot</button>
+    </div>
+
+    <script src="bullets.js"></script>
+    <script src="enemies.js"></script>
+    <script src="boss.js"></script>
+    <script src="player.js"></script>
+    <script src="game.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

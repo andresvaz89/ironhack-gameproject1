@@ -1,48 +1,31 @@
 const canvasElement = document.querySelector('canvas');
 
-class Player {
-  constructor(game) {
-    this.game = game;
-    this.x = 100;
-    this.y = 200;
-    this.width = 50;
-    this.height = 50;
-  }
-  draw() {
-    this.context.fillStyle = 'blue';
+const enemy = new Enemy();
 
-    //player1 drew
-    this.context.fillRect(this.x, this.y, this.width, this.height);
-  }
-}
+const boss = new Boss();
 
-const player = new Player();
+const startScreenElement = document.getElementById('start-screen');
+const playingScreenElement = document.getElementById('playing-screen');
+const endScreenElement = document.getElementById('game-over-screen');
 
-class Game {
-  constructor(canvasElement) {
-    this.canvas = canvasElement;
-    this.context = canvasElement.getContext('2d');
-    this.message = 'Hello pilot';
-    this.player = new Player(this);
-  }
-  loop() {
-    window.requestAnimationFrame(() => {
-      this.runLogic();
-      this.draw();
-      this.loop();
-    });
-  }
-  runLogic() {
-    this.player.x += 10;
-  }
-  draw() {
-    this.context.clearRect(0, 0, 500, 500);
-    this.player.draw();
-  }
-}
+const screenElements = {
+  start: startScreenElement,
+  playing: playingScreenElement,
+  end: endScreenElement
+};
+const game = new Game(canvasElement, screenElements);
 
-const game = new Game(canvasElement);
+const startButton = startScreenElement.querySelector('button');
+const tryAgainButton = endScreenElement.querySelector('button');
 
-game.loop();
+startButton.addEventListener('click', () => {
+  game.displayScreen('playing');
+  game.start();
+});
 
-//00:47:00 del video del martes 15
+endScreenElement.addEventListener('click', () => {
+  game.displayScreen('playing');
+  game.start();
+});
+
+//01:30:00 del video del martes 15

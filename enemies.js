@@ -39,6 +39,7 @@ class Enemy {
     if (this.y > (Math.random() / 2) * 900) {
       this.y -= this.speed;
     }
+    //this.game.enemyShoot(this.x, this.y);
   }
   draw() {
     this.game.context.save();

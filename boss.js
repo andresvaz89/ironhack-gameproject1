@@ -26,9 +26,9 @@ class Boss {
   runLogic() {
     this.y += this.speed;
     if (this.y > 900) {
-      this.y -= this.speed;
+      this.speed -= 2;
     } else if (this.y < 900) {
-      this.y -= this.speed;
+      this.speed += 2;
     }
   }
   draw() {

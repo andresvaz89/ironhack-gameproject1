@@ -1,10 +1,10 @@
-let playerImage = new Image();
+const playerImage = new Image();
 playerImage.src = './images/CommandShip-1.png';
 
-let playerImageWithTwoLives = new Image();
+const playerImageWithTwoLives = new Image();
 playerImageWithTwoLives.src = './images/CommandShip-2.png';
 
-let playerImageWithOneLive = new Image();
+const playerImageWithOneLive = new Image();
 playerImageWithOneLive.src = './images/CommandShip-3.png';
 
 class Player {
@@ -15,8 +15,9 @@ class Player {
     this.width = 100;
     this.height = 100;
     this.lives = 3;
-    playerImage.src = './images/CommandShip-1.png';
+    this.image = playerImage;
   }
+
   runLogic() {
     // this. -= 1;      antiguo movimiento del player
   }
@@ -26,7 +27,7 @@ class Player {
     this.game.context.fillStyle = 'blue';
     //player1 drew
     this.game.context.drawImage(
-      playerImage,
+      this.image,
       this.x,
       this.y,
       this.width,

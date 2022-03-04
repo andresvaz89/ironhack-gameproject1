@@ -14,7 +14,7 @@ class Bullet {
   }
   draw() {
     this.game.context.save();
-    this.game.context.fillStyle = 'yellow';
+    //this.game.context.fillStyle = 'yellow';
     this.game.context.drawImage(
       bulletImage,
       this.x,

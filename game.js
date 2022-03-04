@@ -131,6 +131,26 @@ class Game {
         }
         //cambiar color de la nave
       }
+
+      const enemyIsOutOfBounds = this.x + enemy.width < 0;
+
+      if (enemyIsOutOfBounds) {
+        this.enemies.splice(indexOfEnemy, 1);
+        generateEnemyFromBehind();
+        console.log('out of bounds');
+      }
+    }
+
+    for (const boss of this.bosses) {
+      boss.runLogic();
+
+      const bossIsOutOfBounds = this.x + boss.width < 0;
+
+      if (bossIsOutOfBounds) {
+        this.bosses.splice(indexOfBoss, 1);
+        generateBossFromBehind();
+        console.log('out of bounds');
+      }
     }
 
     for (const bullet of this.bullets) {
@@ -147,20 +167,8 @@ class Game {
           this.bullets.splice(indexOfBullet, 1);
           this.score += 100;
         }
-        const enemyIsOutOfBounds = this.x + enemy.width < 0;
-
-        if (enemyIsOutOfBounds) {
-          this.enemies.splice(indexOfEnemy, 1);
-          generateEnemyFromBehind();
-          console.log('out of bounds');
-        }
-
-        if (bullet.x - bullet.width > this.canvas.width) {
-          const indexOfBullet = this.bullets.indexOf(bullet);
-          this.bullets.splice(indexOfBullet, 1);
-          // console.log('bullet out');
-        }
       }
+
       for (const boss of this.bosses) {
         //if bullet touches Boss, both dissappear
         const bulletandBossareIntersecting = boss.checkIntersection(bullet);
@@ -176,19 +184,14 @@ class Game {
             this.score += 1000;
           }
         }
-        const bossIsOutOfBounds = this.x + boss.width < 0;
 
-        if (bossIsOutOfBounds) {
-          this.bosses.splice(indexOfBoss, 1);
-          generateBossFromBehind();
-          console.log('out of bounds');
-        }
 
-        if (bullet.x - bullet.width > this.canvas.width) {
-          const indexOfBullet = this.bullets.indexOf(bullet);
-          this.bullets.splice(indexOfBullet, 1);
-          // console.log('bullet out');
-        }
+
+      }
+      if (bullet.x - bullet.width > this.canvas.width) {
+        const indexOfBullet = this.bullets.indexOf(bullet);
+        this.bullets.splice(indexOfBullet, 1);
+        // console.log('bullet out');
       }
     }
   }

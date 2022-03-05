@@ -1,10 +1,14 @@
+const playerShootsSound = new Audio();
+playerShootsSound.src = './images/shootSound.wav';
+//  player shooting sound
+
 class Game {
   constructor(canvasElement, screens) {
     this.canvas = canvasElement;
     this.context = canvasElement.getContext('2d');
     this.screens = screens;
-    this.canvas.width = 2000;
-    this.canvas.height = 1000;
+    this.canvas.width = 1800;
+    this.canvas.height = 800;
     this.running = false;
   }
 
@@ -38,22 +42,28 @@ class Game {
   enableControls() {
     window.addEventListener('keydown', (event) => {
       const code = event.code;
-      console.log(code);
+      //console.log(code);
       switch (code) {
         case 'ArrowUp':
+          event.preventDefault();
           this.player.y -= 10;
           break;
         case 'ArrowDown':
+          event.preventDefault();
           this.player.y += 10;
           break;
         case 'ArrowRight':
+          event.preventDefault();
           this.player.x += 10;
           break;
         case 'ArrowLeft':
+          event.preventDefault();
           this.player.x -= 10;
           break;
         case 'Space':
+          event.preventDefault();
           this.fireWeapon();
+          playerShootsSound.play();
           break;
       }
     });
@@ -66,6 +76,7 @@ class Game {
       this.player.y + this.player.height / 2.4
     );
     this.bullets.push(bullet);
+    //playerShootsSound.play();
   }
 
   generateEnemy() {
@@ -78,8 +89,8 @@ class Game {
   }
   //BOSS
   generateBoss() {
-    const bossSpeed = 1;
-    const boss = new Boss(this, 1500, 500, bossSpeed);
+    const bossSpeed = 0.02;
+    const boss = new Boss(this, 1500, 100, bossSpeed);
     this.bosses.push(boss);
     this.canvas.style.backgroundImage = 'url(./images/Wallpaper1b.jpg)';
     boss.runLogic();
@@ -114,7 +125,7 @@ class Game {
       }
       */
     //just spawn 1 boss
-    if (this.score == 200 && this.bosses.length == 0 && this.score < 500) {
+    if (this.score == 1000 && this.bosses.length == 0 && this.score < 1100) {
       //before >=
       this.generateBoss();
       //boss.runLogic(); //boss.runLogic2?
@@ -122,7 +133,7 @@ class Game {
       //console.log('Boss Spawned');
     }
 
-    if (this.score == 2000 && this.bosses.length == 0 && this.score < 2200) {
+    if (this.score == 5000 && this.bosses.length == 0 && this.score < 5100) {
       //before >=
       this.generateBoss();
       //boss.runLogic(); //boss.runLogic3?
@@ -131,16 +142,40 @@ class Game {
     }
 
     this.player.runLogic();
-    boss.runLogic();
 
     if (this.player.lives <= 0) {
       this.lose();
     }
 
+    for (const boss of this.bosses) {
+      boss.runLogic();
+      if (Math.random() < 0.01) {
+        const enemyProjectile = new EnemyProjectile(
+          this,
+          boss.x + boss.width - 100,
+          boss.y + boss.height - 100,
+          5
+        );
+        this.enemyProjectiles.push(enemyProjectile);
+        //console.log('enemy shoots');
+      }
+
+      if (Math.random() < 0.01) {
+        const enemyProjectile = new EnemyProjectile(
+          this,
+          boss.x + boss.width - 100,
+          boss.y + boss.height / 1.7,
+          5
+        );
+        this.enemyProjectiles.push(enemyProjectile);
+        console.log('enemy shoots');
+      }
+    }
+
     for (const enemy of this.enemies) {
       enemy.runLogic();
 
-      if (Math.random() < 0.005) {
+      if (Math.random() < 0.0005 /*&& this.enemyProjectiles.length < 30*/) {
         const enemyProjectile = new EnemyProjectile(
           this,
           enemy.x + enemy.width,
@@ -148,6 +183,7 @@ class Game {
           enemy.speed * 2
         );
         this.enemyProjectiles.push(enemyProjectile);
+        console.log('enemy shoots');
       }
 
       const areIntersecting = enemy.checkIntersection(this.player);
@@ -196,7 +232,7 @@ class Game {
         if (bullet.x - bullet.width > this.canvas.width) {
           const indexOfBullet = this.bullets.indexOf(bullet);
           this.bullets.splice(indexOfBullet, 1);
-          // console.log('bullet out');
+          console.log('bullet out');
         }
       }
       for (const boss of this.bosses) {
@@ -213,6 +249,7 @@ class Game {
             this.score += 1000;
           }
         }
+
         /* const bossIsOutOfBounds = this.x + boss.width < 0;
         if (bossIsOutOfBounds) {
             
@@ -220,12 +257,11 @@ class Game {
           generateBossFromBehind();
           console.log('out of bounds');
         }*/
-
-        if (bullet.x - bullet.width > this.canvas.width) {
-          const indexOfBullet = this.bullets.indexOf(bullet);
-          this.bullets.splice(indexOfBullet, 1);
-          // console.log('bullet out');
-        }
+      }
+      if (bullet.x - bullet.width > this.canvas.width) {
+        const indexOfBullet = this.bullets.indexOf(bullet);
+        this.bullets.splice(indexOfBullet, 1);
+        console.log('bullet out');
       }
     }
 
@@ -245,20 +281,28 @@ class Game {
         } else if (this.player.lives == 1) {
           this.player.image = playerImageWithOneLive;
         }
-        //cambiar color de la nave
+        //change the color of the spaceship depending on remaining lives
+      }
+      if (enemyProjectile.x - enemyProjectile.width > this.canvas.width) {
+        const indexOfEnemyProjectile =
+          this.enemyProjectiles.indexOf(enemyProjectile);
+        this.enemyProjectiles.splice(indexOfEnemyProjectile, 1);
+        console.log('projectile out');
       }
     }
   }
 
   drawScore() {
     this.context.font = '48px monospace';
-    this.context.fillText(this.score, 400, 400);
+
+    this.context.fillText(this.score, 340, 300);
   }
 
   draw() {
     this.context.clearRect(0, 0, 2000, 1000);
     for (const enemy of this.enemies) {
       enemy.draw();
+
       //this.enemyProjectile.draw();
     }
     for (const boss of this.bosses) {
@@ -275,7 +319,6 @@ class Game {
         enemyProjectile.height
       );
       enemyProjectile.draw();
-      console.log('being drawn');
     }
     this.player.draw();
     this.drawScore();

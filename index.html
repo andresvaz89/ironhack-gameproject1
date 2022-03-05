@@ -8,16 +8,30 @@
   </head>
   <body>
     <div class="screen" id="start-screen">
-      <h1>Hello Pilot</h1>
-      <button>Start Game</button>
+      <h1>
+        Hello Pilot:
+        <ul>
+          <li>Use the ARROWS KEYS to move your ship</li>
+          <li>shoot your enemies using SPACE</li>
+        </ul>
+      </h1>
+
+      <button>Save the Galaxy, Pilot</button>
     </div>
 
     <div class="screen" id="playing-screen" style="display: none">
-      <canvas width="2000" height="1000"></canvas>
+      <canvas width="1800" height="800"></canvas>
     </div>
 
     <div class="screen" id="game-over-screen" style="display: none">
-      <h3>Game Over</h3>
+      <h1>Game Over</h1>
+
+      <h1>
+        <ul>
+          <li>You've tried.</li>
+          <li>Sadly, the whole galaxy is ashamed...</li>
+        </ul>
+      </h1>
       <button>Try it again, Pilot</button>
     </div>
     <script src="enemyProjectiles.js"></script>

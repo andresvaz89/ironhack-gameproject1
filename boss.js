@@ -25,11 +25,12 @@ class Boss {
 
   runLogic() {
     this.y += this.speed;
-    if (this.y > 900) {
-      this.speed -= 2;
-    } else if (this.y < 900) {
-      this.speed += 2;
+    if (this.y > 500) {
+      this.speed -= 0.03;
+    } else if (this.y <= 500) {
+      this.speed += 0.0011;
     }
+    console.log(this.y);
   }
   draw() {
     this.game.context.save();

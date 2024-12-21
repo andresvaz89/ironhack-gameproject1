@@ -40,34 +40,28 @@ class Game {
   }
 
   enableControls() {
+    // Almacenar las teclas que están presionadas
+    this.keysPressed = {};
+
+    // Registrar cuando se presionan las teclas
     window.addEventListener('keydown', (event) => {
-      const code = event.code;
-      //console.log(code);
-      switch (code) {
-        case 'ArrowUp':
-          event.preventDefault();
-          this.player.y -= 10;
-          break;
-        case 'ArrowDown':
-          event.preventDefault();
-          this.player.y += 10;
-          break;
-        case 'ArrowRight':
-          event.preventDefault();
-          this.player.x += 10;
-          break;
-        case 'ArrowLeft':
-          event.preventDefault();
-          this.player.x -= 10;
-          break;
-        case 'Space':
-          event.preventDefault();
-          this.fireWeapon();
-          playerShootsSound.play();
-          break;
-      }
+        const code = event.code;
+        this.keysPressed[code] = true;
+
+        // Disparar con la barra espaciadora
+        if (code === 'Space') {
+            event.preventDefault();
+            this.fireWeapon();
+            playerShootsSound.play();
+        }
     });
-  }
+
+    // Registrar cuando se sueltan las teclas
+    window.addEventListener('keyup', (event) => {
+        const code = event.code;
+        this.keysPressed[code] = false;
+    });
+}
 
   fireWeapon() {
     const bullet = new Bullet(
@@ -114,6 +108,20 @@ class Game {
   }
 
   runLogic() {
+
+    if (this.keysPressed['ArrowUp']) {
+      this.player.y -= 3; // Ajusta la velocidad a tu gusto
+  }
+  if (this.keysPressed['ArrowDown']) {
+      this.player.y += 3;
+  }
+  if (this.keysPressed['ArrowLeft']) {
+      this.player.x -= 3;
+  }
+  if (this.keysPressed['ArrowRight']) {
+      this.player.x += 3;
+  }
+
     if (Math.random() < 0.01) {
       this.generateEnemy();
     }

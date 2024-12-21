@@ -1,20 +1,14 @@
 body {
   height: 100vh;
-}
-
-body {
   margin: 0;
   background-color: black;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: monospace;
+  overflow: hidden; /* Evita barras de desplazamiento */
 }
 
-canvas {
-  background-image: url('./images/Wallpaper1a.jpg');
-  background-size: cover;
-}
 
 .screen {
   background-color: black;
@@ -44,10 +38,113 @@ h1 {
   vertical-align: middle;
 }
 
+h1 ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
 button {
   font: inherit;
   background-color: skyblue;
-  color: white;
+  color: white;/* Estilo general para el cuerpo */
+  body {
+    height: 100vh;
+    margin: 0;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace;
+    overflow: hidden; /* Evita barras de desplazamiento */
+  }
+  
+  canvas {
+    background-image: url('./images/Wallpaper1a.jpg');
+    background-size: cover;
+    background-position: center;
+    display: block;
+    border: 2px solid white; /* Destaca el canvas */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); /* Agrega un brillo alrededor */
+  }
+  
+
+  .screen {
+    background-color: black;
+    width: 100vw; /* Se adapta dinámicamente a la ventana */
+    height: 100vh; /* Ocupa toda la pantalla */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute; /* Superpone las pantallas */
+    top: 0;
+    left: 0;
+    opacity: 0; /* Ocultas por defecto */
+    transition: opacity 0.3s ease-in-out;
+    z-index: 10;
+  }
+  
+  /* Activa las pantallas */
+  #start-screen.active,
+  #game-over-screen.active {
+    opacity: 1;
+    z-index: 15;
+  }
+  
+  /* Pantalla de inicio */
+  #start-screen {
+    background-image: url('./images/space.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column; /* Ordena verticalmente el contenido */
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Pantalla de Game Over */
+  #game-over-screen {
+    background-image: url('./images/space.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Títulos */
+  h1 {
+    color: white;
+    font-size: 2rem; /* Tamaño relativo */
+    text-align: center;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Mejora la visibilidad del texto */
+  }
+
+  
+  /* Botones */
+  button {
+    font: inherit;
+    background-color: skyblue;
+    color: white;
+    border: none;
+    padding: 0.8em 1.5em;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 1rem 0;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: deepskyblue;
+    transform: scale(1.1);
+  }
+  
+  button:active {
+    background-color: dodgerblue;
+    transform: scale(1.05);
+  }
+  
   border: 0;
   padding: 1 em;
   margin-left: 100px;
